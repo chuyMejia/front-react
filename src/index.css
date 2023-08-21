@@ -133,6 +133,7 @@ input[type="button"]{
   font-weight: 500;
   cursor: pointer;
   transition: all 300ms;
+  margin-right: 5px;
 
 
 }
@@ -171,7 +172,9 @@ input[type="button"]{
 }
 .lateral input[type="text"],
 .lateral input[type="number"],
-.lateral textarea{
+.lateral textarea,
+.lateral select,
+.lateral input[type="file"]{
   display:block ;
   margin: 0 auto ;
   margin-top: 15px;

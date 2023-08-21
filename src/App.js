@@ -4,6 +4,7 @@ import Listado from "./componentes/Listado";
 
 
 
+
 function App() {
   return (
     <div className="layout">
@@ -13,7 +14,7 @@ function App() {
         <div className="logo">
             <div className="play"></div>
         </div>
-        <h1>Mis pelis</h1>
+        <h1>header</h1>
     </header>
 
     {/*barra de navegacion*/}
