@@ -1,24 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import Buscador from "./componentes/Buscador";
+import Crear from "./componentes/Crear";
+import Listado from "./componentes/Listado";
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="layout">
+
+    {/*--cabecera-*/}
+    <header className="header" >
+        <div className="logo">
+            <div className="play"></div>
+        </div>
+        <h1>Mis pelis</h1>
+    </header>
+
+    {/*barra de navegacion*/}
+    <nav className="nav">
+        <ul>
+            <li><a href="/#">inicio</a></li>
+            <li><a href="/#">peliculas</a></li>
+            <li><a href="/#">blog</a></li>
+            <li><a href="/#">contacto</a></li>
+
+        </ul>
+    </nav>
+    {/*contenido principal-*/}
+    <section className="content" >
+       <Listado></Listado>
+    </section>
+
+    {/*-barra lateral*/}
+    <aside className="lateral">
+       <Buscador></Buscador>
+
+      <Crear></Crear>
+
+    </aside>
+
+    {/*pie de pagina */}
+    <footer className="footer">
+        &copy; Tienda Proyecto - html react nodeJS<a href="/#">ir a repositorio de git</a>
+    </footer>
+
+
+</div>
   );
 }
 
