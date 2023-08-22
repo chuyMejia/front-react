@@ -3,6 +3,24 @@ import axios from 'axios';
 
 export const Editar = ({item}) => {
 
+  const [dataCategory, setDataCategory] = useState([]);
+
+  useEffect(() => {
+    fethCategorias();
+   console.log('componente dit creado'+dataCategory);
+  }, []);
+
+  const fethCategorias = async () => {
+      try {
+        const response = await fetch('http://localhost:3700/api/categorias');
+        const data = await response.json();
+          console.log(data);
+        setDataCategory(data.categoria); // Actualizar el estado con los datos obtenidos
+      } catch (error) {
+        console.error('Error al obtener los datos:', error);
+      }
+    };
+
     
     const [fileName, setFileName] = useState('Ningún archivo seleccionado');
     const [selectedImage, setSelectedImage] = useState(null);
@@ -120,9 +138,11 @@ export const Editar = ({item}) => {
                     className='descripcion-editada'
                     defaultValue={item.descripcion}></textarea>
               <select name="cat_id" defaultValue={item.categoria_id} >
-                <option value='1'>teror</option>
-                <option value='2'>comedia</option>
-                <option value='3'>risa</option>
+                    {dataCategory.map(categoria => (
+                      <option key={categoria.id} value={categoria.id}>
+                        {categoria.nombre}
+                      </option>
+                    ))}
               </select>
               <input type="number" 
                      name='precio' 

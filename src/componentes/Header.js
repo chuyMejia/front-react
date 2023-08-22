@@ -1,6 +1,7 @@
 import React,{ useState,useEffect } from 'react'
+import Listado from './Listado';
 
- const Header = () => {
+ const Header = ({setSelectedCategory}) => {
 
     
     const [dataCategory, setDataCategory] = useState([]);
@@ -20,14 +21,20 @@ import React,{ useState,useEffect } from 'react'
         }
       };
 
+      const changeList = (categoryId)=> {
+        //alert('fffff:'+categoryId);
+        setSelectedCategory(categoryId);
+
+      }
+
     
   return (
     <nav className="nav">
     <ul>
-        <li><a href="/#">inicio</a></li>
-        <li><a href="/#">contacto</a></li>
+        <li onClick={() => changeList(null)} ><a href="/#">Listado Completo</a></li>
+        <li><a href="/contacto">contacto</a></li>
         {dataCategory.map(categoria => (
-          <li key={categoria.id}><a href="/#">{categoria.nombre}</a></li>
+          <li key={categoria.id} onClick={() => changeList(categoria.nombre)}><a href="/#">{categoria.nombre}</a></li>
         ))}
 
     </ul>
