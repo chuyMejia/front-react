@@ -7,24 +7,25 @@ import ImageUploadComponent from './UploadImage';
  const Crear = () => {
 
     const title ="AÑADIR";
-
     const [fileName, setFileName] = useState('Ningún archivo seleccionado');
-
     const [id, setId] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
+
 
     const handleIdChange = (event) => {
         setId(event.target.value);
     };
 
+    //------------set al input file--------------------------------
     const handleImageChange = (event) => {
         setSelectedImage(event.target.files[0]);
         console.log(selectedImage);
     };
-
+//---------------------------------------------
 
     const conseguirDataForm = (e) =>{
-
+//funcion del submit form 
+//-----------------------------inicia------------------------------------------------
         e.preventDefault();
         //conseguir datos del formulario
         var target = e.target;
@@ -34,7 +35,7 @@ import ImageUploadComponent from './UploadImage';
        
       
 
-            const data = { nombre: nombre, description: descripcion,category:categorys,image:fileName }; // Datos que deseas enviar en el body
+            const data = { name: nombre, description: descripcion,category:categorys,image:fileName }; // Datos que deseas enviar en el body
             const url = 'http://localhost:3700/api/save-project'; // URL de la API
 
             fetch(url, {
@@ -48,14 +49,15 @@ import ImageUploadComponent from './UploadImage';
                 if (!response.ok) {
                 throw new Error('Network response was not ok');
                 }
-                //ejectura mi accion para guardar imagen
+                
 
-
+//
 
                 return response.json(); // Parsea la respuesta JSON
             })
             .then(data => {
-                // Manipula los datos de respuesta si es necesario
+                //ejectura mi accion para guardar imagen
+   //---------------------------------------------------------------------------             
                 const formData = new FormData();
                 formData.append('image', selectedImage);
                // formData.append('otherField', otherField);
@@ -66,26 +68,23 @@ import ImageUploadComponent from './UploadImage';
                 .then(uploadResponse => {
                   console.log('Respuesta de subida de imagen:', uploadResponse.data);
                   // Realizar acciones adicionales si es necesario
+                  window.location.reload();
                 })
                 .catch(uploadError => {
                   console.error('Error en la subida de imagen:', uploadError);
                 });
             })
+//----------------------------------------------------------------------------------            
             .catch(error => {
                 // Maneja errores en la solicitud
                 console.error('There was a problem with the fetch operation:', error);
             });
 
+
        // alert('tile'+nombre+' dd'+descripcion);
 
     }
-/*name:String,
-	description:String,
-	category:String,
-	lags:String,
-	//lags:[String]
-	year:Number,
-	image:String*/
+//---------------------------FIN-----------------------------------
 
   return (
       <div className="add">
