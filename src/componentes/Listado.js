@@ -1,5 +1,6 @@
 import React,{ useState, useEffect } from 'react';
 import Editar from './Editar';
+
 //import React, { useState, useEffect } from 'react';
 
  const Listado = ({categoryId}) => {
@@ -103,14 +104,20 @@ const editarFunc = (itemId) =>{
 
 
 }
-    
+    console.log(data);
      return (<>
             
         
            
       
             {data && data.map((item, index) => (
+                
                 <article className="p-item" key={index}>
+                     <div class="ribbon-wrapper">
+                            <div class="ribbon bg-primary">
+                            {item.nombre_categoria}
+                            </div>
+                        </div>
                     <div className="image-container">
                     
                    
@@ -123,7 +130,12 @@ const editarFunc = (itemId) =>{
 
                     </div>
                     <h3 className="title">{item.nombre}</h3>
-                    <h2>{item.precio}.00$</h2>
+                    <h2>{item.precio}.00$ </h2>{item.stock !== 0 ? (
+                                                    <h3 className='cantidad'><strong>Stock:</strong>{item.stock}</h3>
+                                                    ) : (
+                                                    <p className='sold-out'>Sold Out</p>
+                                                    )}
+
                     <p className="descripcion">{item.descripcion}</p>
                     
                     {/* Agregar el resto de los campos aquí */}
