@@ -1,10 +1,16 @@
-import React,{ useState } from 'react'
+import React,{ useState,useEffect } from 'react'
 import axios from 'axios';
 import ImageUploadComponent from './UploadImage';
 
 
 
  const Crear = () => {
+
+    const [dataCategory, setDataCategory] = useState([]);
+
+    useEffect(() => {
+      fethCategorias();
+    }, []);
 
     const title ="AÑADIR";
     const [fileName, setFileName] = useState('Ningún archivo seleccionado');
@@ -15,6 +21,20 @@ import ImageUploadComponent from './UploadImage';
     const handleIdChange = (event) => {
         setId(event.target.value);
     };
+
+
+  
+    const fethCategorias = async () => {
+        try {
+          const response = await fetch('http://localhost:3700/api/categorias');
+          const data = await response.json();
+            console.log(data);
+          setDataCategory(data.categoria); // Actualizar el estado con los datos obtenidos
+        } catch (error) {
+          console.error('Error al obtener los datos:', error);
+        }
+      };
+
 
     //------------set al input file--------------------------------
     const handleImageChange = (event) => {
@@ -30,13 +50,18 @@ import ImageUploadComponent from './UploadImage';
         //conseguir datos del formulario
         var target = e.target;
         let nombre = target.nombre.value;
-        let descripcion = target.descripcion.value;
+        let descripciones = target.descripcion.value;
         let categorys = target.cat_id.value;
+        let price = target.precio.value;
+        let cuantity = target.stock.value;
+        
        
       
 
-            const data = { name: nombre, description: descripcion,category:categorys,image:fileName }; // Datos que deseas enviar en el body
-            const url = 'http://localhost:3700/api/save-project'; // URL de la API
+            const data = { nombre: nombre, descripcion: descripciones,categoria_id:categorys,image:fileName,precio:price,stock:cuantity }; // Datos que deseas enviar en el body
+
+           
+            const url = 'http://localhost:3700/api/save-product'; // URL de la API
 
             fetch(url, {
             method: 'POST',
@@ -56,15 +81,17 @@ import ImageUploadComponent from './UploadImage';
                 return response.json(); // Parsea la respuesta JSON
             })
             .then(data => {
+                /*console.log(data.message);
+                return false;*/
                 //ejectura mi accion para guardar imagen
    //---------------------------------------------------------------------------             
                 const formData = new FormData();
                 formData.append('image', selectedImage);
                // formData.append('otherField', otherField);
 
-                console.log(data.project._id);
-                let id_resp = data.project._id;
-                axios.post(`http://localhost:3700/api/upload-image/${id_resp}`, formData)
+               // console.log(data.project._id);
+                let id_resp = data.message;
+                axios.post(`http://localhost:3700/api/uploadImage/${id_resp}`, formData)
                 .then(uploadResponse => {
                   console.log('Respuesta de subida de imagen:', uploadResponse.data);
                   // Realizar acciones adicionales si es necesario
@@ -93,18 +120,24 @@ import ImageUploadComponent from './UploadImage';
               <input type="text"
                      id = "nombre"
                      name = "nombre"
-                     placeholder="" />
+                     placeholder="NOMBRE" />
               <textarea 
               id = "descripcion"
               name = "descripcion"
               placeholder="descripcion"></textarea>
-
+            <label className='label'>Categoras disponibles</label>
             <select name="cat_id">
-                <option value="1">categoria 1</option>
-                <option value="2">categoria 2</option>
-                <option value="3">categoria 3</option>
+            <option value="">Selecciona una opción</option>
+                {dataCategory.map(categoria => (
+                <option key={categoria.id} value={categoria.id}>
+                    {categoria.nombre}
+                </option>
+                ))}
 
               </select>
+
+              <input type="number" name='precio' placeholder='PRECIO'/>
+              <input type="number" name='stock' placeholder='CANTIDAD'/>
 
               <input type="file" onChange={handleImageChange}/>
 

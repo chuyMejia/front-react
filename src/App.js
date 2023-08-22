@@ -1,5 +1,6 @@
 import Buscador from "./componentes/Buscador";
 import Crear from "./componentes/Crear";
+import Header from "./componentes/Header";
 import Listado from "./componentes/Listado";
 
 
@@ -18,15 +19,7 @@ function App() {
     </header>
 
     {/*barra de navegacion*/}
-    <nav className="nav">
-        <ul>
-            <li><a href="/#">inicio</a></li>
-            <li><a href="/#">peliculas</a></li>
-            <li><a href="/#">blog</a></li>
-            <li><a href="/#">contacto</a></li>
-
-        </ul>
-    </nav>
+     <Header></Header>
     {/*contenido principal-*/}
     <section className="content" >
        <Listado></Listado>

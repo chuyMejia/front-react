@@ -1,8 +1,10 @@
 import React,{ useState, useEffect } from 'react';
+import Editar from './Editar';
 //import React, { useState, useEffect } from 'react';
 
  const Listado = () => {
     const [data, setData] = useState(null);
+    const [editar, setEdit] = useState(0);
 
     useEffect(() => {
       // Código que se ejecuta después de cargar el componente
@@ -11,11 +13,15 @@ import React,{ useState, useEffect } from 'react';
       fetchData();
     }, []);
 
+    
     const fetchData = async () => {
         try {
-          const response = await fetch('http://localhost:3700/api/projects');
+          const response = await fetch('http://localhost:3700/api/productos');
           const data = await response.json();
-          setData(data.allobjects);
+           // console.log(data);
+            //return false;
+
+          setData(data.productos);
             console.log(data);
 
          
@@ -27,8 +33,9 @@ import React,{ useState, useEffect } from 'react';
 
 
       const handleDelete = async (id) => {
+
         try {
-            const response = await fetch(`http://localhost:3700/api/project/${id}`, {
+            var response = await fetch(`http://localhost:3700/api/producto/${id}`, {
                 method: 'DELETE',
                 // Agrega cualquier encabezado necesario aquí
             });
@@ -52,14 +59,28 @@ import React,{ useState, useEffect } from 'react';
             {data && data.map((item, index) => (
                 <article className="p-item" key={index}>
                     <div className="image-container">
-                    <img src={`http://localhost:3700/api/get-image/${item.image}`} alt={item.title} />
+                    
+                   
+
+                    {item.image ? (
+                        <img src={`http://localhost:3700/api/get-image/${item.image}`} alt={item.title} />
+                    ) : (
+                        <p>Imagen not found</p>
+                    )}
+
                     </div>
-                    <h3 className="title">{item.name}</h3>
-                    <p className="descripcion">{item.description}</p>
+                    <h3 className="title">{item.nombre}</h3>
+                    <h2>{item.precio}.00$</h2>
+                    <p className="descripcion">{item.descripcion}</p>
                     
                     {/* Agregar el resto de los campos aquí */}
-                    <button className="edit">editar</button>
-                    <button className="delete" onClick={() => handleDelete(item._id)} >borrar</button>
+                    <button className="edit"   onClick={() => setEdit(item.id)} >editar</button>
+                    <button className="delete" onClick={() => handleDelete(item.id)} >borrar</button>
+                    {/*formulario para editar*/}
+                    {editar === item.id && (
+                        <Editar item ={item}></Editar>
+                    )}
+
                 </article>
             ))}
      

@@ -156,6 +156,13 @@ input[type="button"]{
 
 
 }
+
+.label{
+  display: block;
+  margin-top: 14px;
+  margin-bottom: -14px;
+}
+
 .lateral >div{
   box-sizing: border-box;
   width: 95%;
@@ -232,3 +239,22 @@ input[type="button"]{
   height: 100%;
   
 }
+
+
+
+
+.edit-form input[type="text"], .edit-form input[type="number"], .edit-form textarea, .edit-form select, .edit-form input[type="file"] {
+  display: block;
+  margin: 0 auto;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 5px;
+  background: #f6f7f9;
+  color: #454545;
+  width: 80%;
+  opacity: 4;
+  outline: 0;
+  border-color: #ddd;
+  /* border-color: #ddd; */
+}
+
